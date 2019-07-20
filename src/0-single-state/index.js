@@ -12,7 +12,7 @@ let createStore = function(initalState) {
     listenerList.push(listener)
   }
   /**通知 */
-  function dispatch(newState = initalState) {
+  function changeState(newState = initalState) {
     state = newState
     for(let listener of listenerList) {
       listener()
@@ -25,7 +25,7 @@ let createStore = function(initalState) {
 
   return {
     subcribe,
-    dispatch,
+    changeState,
     getState
   }
 }
@@ -36,12 +36,12 @@ store.subcribe(() => {
   console.log('store was changed,', store.getState())
 })
 
-store.dispatch({
+store.changeState({
   ...store.getState(),
   name: 'Dean'
 })
 
-store.dispatch({
+store.changeState({
   ...store.getState(),
   info: '打字员'
 })

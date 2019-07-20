@@ -1,18 +1,20 @@
-import changeName from './reducer/name.js'
-import changeInfo from './reducer/info'
+import nameReducer from './reducer/name.js'
+import infoReducer from './reducer/info.js'
 import combineReducer from './combineReducer.js'
-import createStore from '../1-state-with-single-reducer/index.js'
+import createStore from '../1-state-with-single-reducer/createStore.js'
 const reducer = combineReducer({
-  name: changeName,
-  info: changeInfo
+  name: nameReducer,
+  info: infoReducer
 })
 
 const initalState = {
   name: {
-    value: 'dcp'
+    value: 'dcp',
+    type: 'chinese'
   },
   info: {
-    infoName: '页面仔'
+    position: '页面仔',
+    hobby: '唱 跳 rap 篮球'
   }
 }
 
@@ -23,6 +25,11 @@ store.subcribe(() => {
 })
 
 store.dispatch({
-  type: 'CHANGE_NAME',
+  type: 'CHANGE_VALUE',
   value: 'Dean'
+})
+
+store.dispatch({
+  type: 'CHANGE_POSITION',
+  position: '个人练习生'
 })
