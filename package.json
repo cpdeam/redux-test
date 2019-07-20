@@ -1,0 +1,20 @@
+{
+  "name": "redux-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start0": "babel-node src/0-single-state/index.js -s",
+    "start1": "babel-node src/1-state-with-single-reducer/index.js -s",
+    "start2": "babel-node src/2-state-with-multi-reducer/index.js -s"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
+}
