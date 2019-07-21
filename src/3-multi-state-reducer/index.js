@@ -7,17 +7,6 @@ const reducer = combineReducer({
   info: infoReducer
 })
 
-const initalState = {
-  name: {
-    value: 'dcp',
-    type: 'chinese'
-  },
-  info: {
-    position: '页面仔',
-    hobby: '唱 跳 rap 篮球'
-  }
-}
-
 const store = createStore(reducer)
 console.log(store.getState()) // 此时已经是完成了初始化的state了
 
