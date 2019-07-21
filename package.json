@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start0": "babel-node src/0-single-state/index.js -s",
     "start1": "babel-node src/1-state-with-single-reducer/index.js -s",
-    "start2": "babel-node src/2-state-with-multi-reducer/index.js -s"
+    "start2": "babel-node src/2-state-with-multi-reducer/index.js -s",
+    "start3": "babel-node src/3-multi-state-reducer/index.js -s"
+
   },
   "keywords": [],
   "author": "",
