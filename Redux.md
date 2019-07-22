@@ -127,8 +127,35 @@ Redux是**“可预测的状态管理器”**，因此能够引起状态变化�
 
 `store.dispatch = applyMiddleware(store, loggerMiddleware, exceptionMiddleware)`
 
+#### 异步action
+
+在实际项目中，异步是不可避免的。之前的代码中，当我们每次dispatch一个action时，action只能是一个plain object(普通对象，这里指的是**直接继承于Object**的对象)，否则reducer无法成功解析(按照官方文档的意思，action必须是“可序列化的”,这部分暂时不是很理解)。
+
+> 和 state 一样，可序列化的 action 使得若干 Redux 的经典特性变得可能，比如时间旅行调试器、录制和重放 action。若使用 Symbol 等去定义 type 值，或者用 instanceof 对 action 做自检查都会破坏这些特性。字符串是可序列化的、自解释型，所以是更好的选择。
+
+> 因为性能原因，我们无法强制序列化 action，所以 Redux 只会校验 action 是否是普通对象，以及 type 是否定义。
+
+![action必须是个普通对象](https://i.imgur.com/IHJ8UAI.png)
+
+然鹅在实际开发中，存在大量的异步场景，例如最常见的请求调用。我们可以利用中间件，让dispatch可以直接接收一个Function类型的action。Redux就提供了这样一个中间件redux-thunk：
+
+![redux-thunk](https://i.imgur.com/GsHvJ5D.png)
+
+代码其实也很简单，判断了一下action是否是函数，是的话则执行这个action。用这个中间件去增强dispatch的功能，就可以按照下面这种形式写异步的action了：
+
+![异步action](https://i.imgur.com/qbXnZ7W.png)
+
+调用时：
+
+`dispatch(getCardInfoAction())`
+
+**tips**：无论嵌套执行了多少个middleware，最终被dispatch的那个action，仍然必须是一个plain object，将处理流程变回同步方式。
+
+> 当 middleware 链中的最后一个 middleware 开始 dispatch action 时，这个 action 必须是一个普通对象。这是 **同步式的 Redux 数据流** 开始的地方（译注：这里应该是指，你可以使用任意多异步的 middleware 去做你想做的事情，但是需要使用普通对象作为最后一个被 dispatch 的 action ，来将处理流程带回同步方式）。
+
 #### 小结
-到这里，redux的大部分功能其实已经基本实现了，剩余的还有一些细节部分，例如将f1 =  f2 => f3(action)这种链式调用变为f1(f2(f3(action)))这种调用形式的compose方法（用在applyMiddleware方法内部）；createStore方法添加有中间件/无中间件的处理；store.subscribe订阅后的退订等很多细节。
+到这里，redux的大部分功能其实已经基本实现了，剩余的还有一些细节部分，例如将f1 =  f2 => f3(action)这种链式调用变为f1(f2(f3(action)))这种调用形式的compose方法（用在applyMiddleware方法内部）；createStore方法添加有中间件/无中间件的处理；store.subscribe订阅后的退订以及各种判断的处理等。
+
 Redux的源码短小精悍，使用纯JavaScript实现，不依赖任何第三方库，因此也适用于各种框架。其完整的流程图：
 
 ![](https://i.imgur.com/8X4NdK6.png)
