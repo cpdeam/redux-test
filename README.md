@@ -29,3 +29,7 @@
 ## 运行
 
 npm run start{number}即可运行对应的代码
+
+#### pr test
+
+鹏哥，为什么要用 babel-node 有什么作用呢？
